@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Logapp frontpage</title>
+    </head>
+    <body>
+        <h1>Logapp</h1>
+        Welcome <b>{{user.username}}</b>
+
+        <form action='logout/' method="POST">
+			{% csrf_token %}
+            <input type="submit" value="Logout"/>
+        </form>
+
+        <h3>Logs for user:</h3>
+
+        <ul>          
+            {% for user in users %}
+                <li>{{user}}</li>
+            {% endfor %}
+        </ul>
+
+
+    </body>
+</html>
