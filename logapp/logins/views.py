@@ -8,6 +8,6 @@ from django.contrib.auth.models import User
 
 @login_required
 def index(request):
-    users = Log.objects.filter(user=request.user)
-    return render(request, 'logpage.html', {'users': users})
+    user_logs = Log.objects.filter(user=request.user)
+    return render(request, 'logpage.html', {'logs': user_logs})
 
