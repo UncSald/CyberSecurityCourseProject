@@ -14,19 +14,37 @@
 
         <h3>Logs for user:</h3>
 
-        <ul>          
+        <ul>
             {% for log in logs %}
                 <li>{{log}}</li>
             {% endfor %}
         </ul>
 
+        <button class="button" onclick="openForm();">Add new log</button>
         <div>
-            <form id="log" >
-                <input type="datetime" placeholder="datetime"><br>
+            <form id="log" action='create_log/' method="GET">
+                {% csrf_token %}
+                <input type="datetime-local" placeholder="datetime" name="timeoflog" ><br>
                 Log type:<br>
-                <input type="checkbox">log in</input> <input type="checkbox">log out</input><br>
+                <input type="checkbox" name="login">log in</input>
+                <input type="checkbox" name="logout">log out</input><br>
                 <button type="submit">Create</button>
             </form>
         </div>
+
+        <script inline="javascript">
+            var butt = false;
+            const the_form = document.getElementById("log");
+            the_form.style.display = 'none';
+            function openForm() {
+                if (the_form.style.display === 'none') {
+                    console.log(true);
+                    the_form.style.display = 'block';
+                } else {
+                    console.log(false);
+                    the_form.style.display = 'none';
+                }
+            }
+		</script>
     </body>
 </html>
