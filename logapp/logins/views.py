@@ -8,18 +8,27 @@ from django.contrib.auth.models import User
 
 def front(request):
     if request.user.is_anonymous:
-        print('lol', request.user)
         return redirect('login/')
-    user_logs = Log.objects.filter(user=request.user)
-    return render(request, 'logpage.html', {'logs': user_logs})
+    return redirect('user/'+str(request.user.username)+'/')
 
+@login_required
+def user_view(request, name):
+    try:
+        users = User.objects.get(username=name)
+        if users:
+            user_logs = Log.objects.filter(user=users)
+            return render(request, 'logpage.html', {'user':name,'logs': user_logs})
+    except:
+        return redirect('/')
+
+@login_required
 def create_log(request):
     if request.method=="GET":
         request.session['timeoflog'] = request.GET.get('timeoflog')
         request.session['login'] = request.GET.get('login')
-
     return render(request, 'confirm.html')
 
+@login_required
 def confirm_creation(request):
     typeoflog = False
     time = request.session['timeoflog']
@@ -32,5 +41,4 @@ def confirm_creation(request):
 
 @login_required
 def most_hours(request):
-
     return render(request, 'toplist.html')
