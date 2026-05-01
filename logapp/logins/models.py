@@ -6,11 +6,12 @@ from django.contrib.auth.models import User
 class Log(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     time = models.DateTimeField('log timestamp')
-    login = models.BooleanField(default=True)
+    login = models.CharField(max_length=10)
     note = models.ForeignKey('Note', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.user.username +' '+ str(self.time) + (', note: ' + self.note.note_content if self.note else '')
+        return self.user.username+', '+self.login+', '+str(self.time.ctime()) +\
+        (', note: ' + self.note.note_content if self.note else '')
 
 
 class Note(models.Model):
