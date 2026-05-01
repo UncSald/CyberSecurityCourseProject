@@ -36,6 +36,8 @@ def create_log(request,name):
 @login_required
 def confirm_creation(request):
     if request.method=="GET":
+    # Fix csrf:
+    # if request.method=="POST":
         user = User.objects.get(username=request.session['user'])
         time = request.session['timeoflog']
         log = request.session['login']
