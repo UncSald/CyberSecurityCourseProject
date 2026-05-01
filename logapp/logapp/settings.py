@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = "/"
 # Application definition
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+CSRF_USE_SESSIONS = True
+
 INSTALLED_APPS = [
     'logins.apps.LoginsConfig',
     'django.contrib.admin',
