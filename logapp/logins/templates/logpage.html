@@ -25,9 +25,15 @@
             <form id="log" action='create_log/' method="GET">
                 {% csrf_token %}
                 <input type="datetime-local" placeholder="datetime" name="timeoflog" ><br>
-                Log type:<br>
-                <input type="checkbox" name="login">log in</input>
-                <input type="checkbox" name="logout">log out</input><br>
+                Logtype:<br>
+                <select name="login" id="login">
+                    <option value="login">login</option>
+                    <option value="logout">logout</option>
+                    <option value="pause">pause</option>
+                    <option value="return">return</option>
+                </select>
+                <br><br>
+                <textarea name="note" placeholder="Notes about the log"></textarea>
                 <button type="submit">Create</button>
             </form>
         </div>
