@@ -22,21 +22,26 @@ def user_view(request, name):
         return redirect('/')
 
 @login_required
-def create_log(request):
+def create_log(request,name):
     if request.method=="GET":
         request.session['timeoflog'] = request.GET.get('timeoflog')
         request.session['login'] = request.GET.get('login')
-    return render(request, 'confirm.html')
+        request.session['note'] = request.GET.get('note')
+        request.session['user'] = name
+        return render(request, 'confirm.html')
+    return redirect('/')
 
 @login_required
 def confirm_creation(request):
-    typeoflog = False
-    time = request.session['timeoflog']
-    to = request.session['login']
-    if to == True:
-        typeoflog = True
-    new_log = Log(user=request.user, time=time, login=typeoflog)
-    new_log.save()
+    if request.method=="GET":
+        user = User.objects.get(username=request.session['user'])
+        time = request.session['timeoflog']
+        log = request.session['login']
+        note = request.session['note']
+        new_note = Note(user=user, note_content=note)
+        new_note.save()
+        new_log = Log(user=user, time=time, login=log, note=new_note if note != '' else None)
+        new_log.save()
     return redirect('/')
 
 @login_required
