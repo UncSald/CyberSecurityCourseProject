@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login as auth_login
 
 def login(request):
+    if request.method == 'GET':
+        return render(request, 'login.html')
     if request.method == 'POST':
         user = User.objects.get(username=request.POST.get('username'),
                             password=request.POST.get('password'))
