@@ -9,5 +9,5 @@ urlpatterns = [
     path('user/<str:name>/create_log/', views.create_log, name='create_log'),
     path('confirm_creation/', views.confirm_creation, name='confirm'),
     path('toplist/', views.most_hours, name='toplist'),
-    path('create_user/create_user',views.create_user, name='create_user'),
+    path('create_user',views.create_user, name='create_user'),
 ]
