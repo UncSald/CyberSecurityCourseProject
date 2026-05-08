@@ -13,6 +13,12 @@ def login(request):
         auth_login(request, user)
     return redirect('/')
 
+def create_user(request):
+    user = User(username=request.POST.get('username'),
+                password=request.POST.get('password'))
+    user.save()
+    return redirect('/')
+
 def front(request):
     if request.user.is_anonymous:
         return redirect('login/')
