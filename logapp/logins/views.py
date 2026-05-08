@@ -20,6 +20,7 @@ def create_user(request):
         user = User(username=request.POST.get('username'),
                     password=request.POST.get('password'))
         user.save()
+        auth_login(request, user)
     return redirect('/')
 
 def front(request):
