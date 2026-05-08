@@ -14,9 +14,12 @@ def login(request):
     return redirect('/')
 
 def create_user(request):
-    user = User(username=request.POST.get('username'),
-                password=request.POST.get('password'))
-    user.save()
+    if request.method == 'GET':
+        return render(request, 'create_user.html')
+    if request.method == 'POST':
+        user = User(username=request.POST.get('username'),
+                    password=request.POST.get('password'))
+        user.save()
     return redirect('/')
 
 def front(request):

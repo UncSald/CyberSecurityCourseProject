@@ -1,0 +1,19 @@
+<h2>Create user</h2>
+<div>
+  <form action='create_user' method="POST">
+    {% csrf_token %}
+    <p>
+      <p>
+        <label for="id_username">Username:</label>
+        <input id="id_username" type="text" name="username" autocapitalize="none"
+        autocomplete="username" maxlength="150" required>
+      </p>
+      <p>
+        <label for="id_password">Password:</label>
+        <input id="id_password" type="text" name="password"
+        autocomplete="current-password" required>
+      </p>
+    </p>
+    <button type="submit">Create user</button>
+  </form>
+</div>
