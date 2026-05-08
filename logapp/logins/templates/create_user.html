@@ -1,6 +1,6 @@
 <h2>Create user</h2>
 <div>
-  <form action='create_user' method="POST">
+  <form method="POST">
     {% csrf_token %}
     <p>
       <p>
@@ -16,4 +16,7 @@
     </p>
     <button type="submit">Create user</button>
   </form>
+</div>
+<div>
+  Already have a user?  <a href="/login">Log in</a> 
 </div>
