@@ -4,7 +4,14 @@ from django.contrib.auth.decorators import login_required
 from .models import Log, WorkingTime, Note
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth import login as auth_login
 
+def login(request):
+    if request.method == 'POST':
+        user = User.objects.get(username=request.POST.get('username'),
+                            password=request.POST.get('password'))
+        auth_login(request, user)
+    return redirect('/')
 
 def front(request):
     if request.user.is_anonymous:

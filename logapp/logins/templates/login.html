@@ -1,6 +1,22 @@
 <h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+<div>
+  <form action='login' method="POST">
+    {% csrf_token %}
+    <p>
+      <p>
+        <label for="id_username">Username:</label>
+        <input id="id_username" type="text" name="username" autocapitalize="none"
+        autocomplete="username" maxlength="150" required>
+      </p>
+      <p>
+        <label for="id_password">Password:</label>
+        <input id="id_password" type="text" name="password"
+        autocomplete="current-password" required>
+      </p>
+    </p>
+    <button type="submit">Login</button>
+  </form>
+</div>
+<div>
+  Don't have an user? Create one
+</div>
