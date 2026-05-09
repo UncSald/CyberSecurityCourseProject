@@ -1,28 +1,23 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Log, WorkingTime, Note
-from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth import login as auth_login
+from .handle_logic import handle_login, handle_user_creation, handle_log_creation, return_user_logs
 
 def login(request):
     if request.method == 'GET':
         return render(request, 'login.html')
     if request.method == 'POST':
-        user = User.objects.get(username=request.POST.get('username'),
-                            password=request.POST.get('password'))
-        auth_login(request, user)
+        try:
+            handle_login(request)
+        except Exception as e:
+            print(e)
+            return redirect('/')
     return redirect('/')
 
 def create_user(request):
     if request.method == 'GET':
         return render(request, 'create_user.html')
     if request.method == 'POST':
-        user = User(username=request.POST.get('username'),
-                    password=request.POST.get('password'))
-        user.save()
-        auth_login(request, user)
+        handle_user_creation(request)
     return redirect('/')
 
 def front(request):
@@ -33,9 +28,9 @@ def front(request):
 @login_required
 def user_view(request, name):
     try:
-        if name != request.user.username: raise Exception
-        users = User.objects.get(username=name)
-        user_logs = Log.objects.filter(user=users)
+        # Fix A01:2021 broken access control
+        # if name != request.user.username: raise Exception
+        users, user_logs = return_user_logs(name)
         return render(request, 'logpage.html', {'user':name,'logs': user_logs})
     except:
         return redirect('/')
@@ -43,7 +38,7 @@ def user_view(request, name):
 @login_required
 def create_log(request,name):
     if request.method=="GET":
-    # Fix csrf:
+    # Fix csrf vulnerability:
     # if request.method=="POST":
         request.session['timeoflog'] = request.GET.get('timeoflog')
         request.session['login'] = request.GET.get('login')
@@ -55,22 +50,7 @@ def create_log(request,name):
 @login_required
 def confirm_creation(request):
     if request.method=="GET":
-    # Fix csrf:
+    # Fix csrf vulnerability:
     # if request.method=="POST":
-        user = User.objects.get(username=request.session['user'])
-        time = request.session['timeoflog']
-        log = request.session['login']
-        note = request.session['note']
-        if note !='':
-            new_note = Note(user=user, note_content=note)
-            new_note.save()
-        new_log = Log(user=user,
-                      time=time,
-                      login=log,
-                      note=new_note if 'new_note' in locals() else None)
-        new_log.save()
+        handle_log_creation(request)
     return redirect('/')
-
-@login_required
-def most_hours(request):
-    return render(request, 'toplist.html')
