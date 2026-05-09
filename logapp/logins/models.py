@@ -19,8 +19,4 @@ class Note(models.Model):
     note_content = models.CharField(max_length=150)
 
     def __str__(self):
-        return self.user.username
-
-class WorkingTime(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    time_worked = int
+        return self.user.username+': '+self.note_content
