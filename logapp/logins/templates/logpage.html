@@ -23,7 +23,7 @@
         <button class="button" onclick="openForm();">Add new log</button>
         <div>
             <form id="log" action='create_log/' method="GET">
-                <!-- fix:
+                <!-- fix csrf vulnerability:
                   ...te_log/' method="POST">-->
                 {% csrf_token %}
                 <input type="datetime-local" placeholder="datetime" name="timeoflog" ><br>
