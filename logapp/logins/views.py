@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .handle_logic import handle_login, handle_user_creation, handle_log_creation, return_user_logs
+from .handle_logic import handle_login, handle_user_creation, handle_log_creation, return_user_logs, check_user_auth
 
 def login(request):
     if request.method == 'GET':
@@ -28,7 +28,7 @@ def front(request):
 @login_required
 def user_view(request, name):
     try:
-        
+        check_user_auth(name,request.user)
         users, user_logs = return_user_logs(name,request.user)
         return render(request, 'logpage.html', {'user':name,'logs': user_logs})
     except Exception:
