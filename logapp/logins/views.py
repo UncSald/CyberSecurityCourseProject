@@ -28,11 +28,10 @@ def front(request):
 @login_required
 def user_view(request, name):
     try:
-        # Fix A01:2021 broken access control
-        # if name != request.user.username: raise Exception
-        users, user_logs = return_user_logs(name)
+        
+        users, user_logs = return_user_logs(name,request.user)
         return render(request, 'logpage.html', {'user':name,'logs': user_logs})
-    except:
+    except Exception:
         return redirect('/')
 
 @login_required

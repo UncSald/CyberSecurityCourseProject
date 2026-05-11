@@ -59,7 +59,9 @@ def handle_log_creation(request) -> None:
     new_log.save()
 
 
-def return_user_logs(name) -> tuple[User, list[Log]]:
+def return_user_logs(name, user) -> tuple[User, list[Log]]:
+    #if User.objects.get(username=name) != user:
+    #    raise Exception("no access")
     users = User.objects.get(username=name)
     user_logs = Log.objects.filter(user=users)
     return (users, user_logs)
