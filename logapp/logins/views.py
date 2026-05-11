@@ -6,11 +6,7 @@ def login(request):
     if request.method == 'GET':
         return render(request, 'login.html')
     if request.method == 'POST':
-        try:
-            handle_login(request)
-        except Exception as e:
-            print(e)
-            return redirect('/')
+        handle_login(request)
     return redirect('/')
 
 def create_user(request):
@@ -30,7 +26,7 @@ def user_view(request, name):
     try:
         # check_user_auth(name,request.user)
         users, user_logs = return_user_logs(name)
-        return render(request, 'logpage.html', {'user':users,'logs': user_logs})
+        return render(request, 'logpage.html', {'user':name,'logs': user_logs})
     except Exception:
         return redirect('/')
 
@@ -48,7 +44,7 @@ def create_log(request,name):
 
 @login_required
 def confirm_creation(request):
-    if request.method=="GET":
+    if request.method=="POST":
     # Fix csrf vulnerability:
     # if request.method=="POST":
         handle_log_creation(request)

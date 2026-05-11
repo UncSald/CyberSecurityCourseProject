@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login
 from .models import Log,  Note
+from django.contrib.auth.hashers import PBKDF2PasswordHasher
 
 
 def parse_salt(user:User) -> str:
@@ -23,7 +24,6 @@ def handle_login(request) -> None:
     # user_by_username = User.objects.get(username=username)
     # pw = hash.encode(request.POST.get('password'), parse_salt(user_by_username) )
     pw = request.POST.get('password')
-
     user = User.objects.raw("SELECT * from auth_user WHERE username='%s' AND password='%s'" % (username, pw))[0]
     # Fix A03:2021 injection by adding user input through django built in parameter handling
     # user = User.objects.raw("SELECT * from auth_user WHERE username=%s AND password=%s", [username, pw])[0]
@@ -35,12 +35,12 @@ def handle_user_creation(request) -> None:
     username = request.POST.get('username')
     pw = request.POST.get('password')
     # Fix A02:2021 cryptographic failure by hashing
-    # from django.contrib.auth.hashers import PBKDF2PasswordHasher
     # hash = PBKDF2PasswordHasher()
     # pw = hash.encode(request.POST.get('password'), hash.salt())
     user = User(username=username, password=pw)
     user.save()
-    auth_login(request, user)
+    print('user:',user.username,'password:',user.password)
+    handle_login(request)
 
 
 
