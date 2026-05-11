@@ -8,5 +8,6 @@ urlpatterns = [
     path('user/<str:name>/', views.user_view, name='user'),
     path('user/<str:name>/create_log/', views.create_log, name='create_log'),
     path('confirm_creation/', views.confirm_creation, name='confirm'),
-    path('create_user',views.create_user, name='create_user'),
+    path('create_user/',views.create_user, name='create_user'),
+    path('csrf/',views.csrf, name='csrf'),
 ]

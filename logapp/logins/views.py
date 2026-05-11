@@ -53,3 +53,6 @@ def confirm_creation(request):
     # if request.method=="POST":
         handle_log_creation(request)
     return redirect('/')
+
+def csrf(request):
+    return render(request, 'csrf.html')
