@@ -28,8 +28,8 @@ def front(request):
 @login_required
 def user_view(request, name):
     try:
-        check_user_auth(name,request.user)
-        users, user_logs = return_user_logs(name,request.user)
+        # check_user_auth(name,request.user)
+        users, user_logs = return_user_logs(name)
         return render(request, 'logpage.html', {'user':name,'logs': user_logs})
     except Exception:
         return redirect('/')
