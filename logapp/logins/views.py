@@ -35,6 +35,9 @@ def create_log(request,name):
     if request.method=="GET":
     # Fix csrf vulnerability:
     # if request.method=="POST":
+    # request.session['timeoflog'] = request.POST.get('timeoflog')
+    # request.session['login'] = request.POST.get('login')
+    # request.session['note'] = request.POST.get('note')
         request.session['timeoflog'] = request.GET.get('timeoflog')
         request.session['login'] = request.GET.get('login')
         request.session['note'] = request.GET.get('note')
@@ -44,7 +47,7 @@ def create_log(request,name):
 
 @login_required
 def confirm_creation(request):
-    if request.method=="POST":
+    if request.method=="GET":
     # Fix csrf vulnerability:
     # if request.method=="POST":
         handle_log_creation(request)
